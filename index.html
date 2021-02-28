@@ -11,9 +11,17 @@
     <body>
         <div class="frame">
             <div class="header">
-                <input type="text" placeholder="Search for task" class="search" id="searchInput" />
+                <button class="display-button" id="b1" value="0">Active</button>
+                <button class="display-button" id="b2" value="1">All</button>
+                <input type="text" placeholder="Search for task" class="search" id="search-input" />
             </div>
-            <div class="side"></div>
+            <div class="side">
+                <h2>New Task</h2>
+                <input type="text" placeholder="Title" class="form-input" id="title" />
+                <input type="text" placeholder="Comment" class="form-input" id="info" />
+                <button class="display-button" id="form-button">Add</button>
+                <p id="error"></p>
+            </div>
             <div class="main" id="todo-container">
             </div>
         </div>
