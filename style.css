@@ -84,8 +84,10 @@ select, option {
 }
 
 .side p {
+    font-size: 1.4vh;
     color: red;
     opacity: .5;
+    word-wrap: break-word;
 }
 
 .form-input {

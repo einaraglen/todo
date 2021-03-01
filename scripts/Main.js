@@ -1,6 +1,11 @@
 window.onload = function(){
     const todoContainer = document.getElementById("todo-container");
+    const title = document.getElementById("title");
+    const info = document.getElementById("info");
+    const error = document.getElementById("error");
     let displayNumber = 2;
+
+    let data = [];
 
     if(localStorage.getItem("data") === null) {
         localStorage.setItem("data", JSON.stringify(data));
@@ -33,13 +38,28 @@ window.onload = function(){
         }
 
         if(e.target && e.target.id == "form-button") {
-            let title = document.getElementById("title");
-            let info = document.getElementById("info");
-            addToData(title.value, info.value);
+            if(title.value.replaceAll(/\s/g,'') !== "" && info.value.replaceAll(/\s/g,'') !== "") {
+                addToData(title.value, info.value);
             title.value = "";
             info.value = "";
             rendreItems();
+            } else {
+                error.innerHTML = "Empty Field";
+            }
         }
+    });
+
+    let prevValue;
+
+    info.addEventListener("keyup", () => {
+        if(info.value.length >= 120) {
+            info.value = prevValue;
+            error.innerHTML = "Max characters : 120";
+        } else {
+            error.innerHTML = "";
+        }
+        prevValue = info.value;
+
     });
 
     const searchInput = document.getElementById("search-input");
@@ -90,9 +110,6 @@ window.onload = function(){
         data.push(item);
         localStorage.setItem("data", JSON.stringify(data));
     }
-
-    // index of item to remove, how many to remove from index
-    //data.splice(1, 1);
 
     function rendre(data) {
         while(todoContainer.firstChild) {
