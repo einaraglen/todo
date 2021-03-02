@@ -4,6 +4,7 @@ class TodoItem {
         this.value = value;
     }
 
+    //complete build of the DOM element
     getItem() {
         let item = document.createElement("div");
         item.setAttribute("class", "box");
@@ -17,6 +18,7 @@ class TodoItem {
         return item;
     }
 
+    //builds title of element
     buildTitle() {
         let title = document.createElement("div");
         title.setAttribute("class", "title " + "t" + (parseInt(this.item.status) + 1));
@@ -24,6 +26,7 @@ class TodoItem {
         return title;
     }
 
+    //builds info area of element
     buildInfo() {
         let info = document.createElement("div");
         info.setAttribute("class", "info");
@@ -31,6 +34,7 @@ class TodoItem {
         return info;
     }
 
+    //sets up the select element based on the data given
     buildStatus() {
         let states = ["Status", "In-Progress", "Done"];
         let status = document.createElement("div");
@@ -60,6 +64,7 @@ class TodoItem {
         return status;
     }
 
+    //builds the delete buttin with the id that coresponds to the index of the item
     buildDelete() {
         let button = document.createElement("img");
         button.setAttribute("src", "img/delete.png");

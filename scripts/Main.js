@@ -1,18 +1,21 @@
-window.onload = function(){
+//script is called onload to wait for DOM to be loaded.
+window.onload = () => {
     const todoContainer = document.getElementById("todo-container");
     const title = document.getElementById("title");
     const info = document.getElementById("info");
     const error = document.getElementById("error");
     let displayNumber = 2;
 
+    //cookie storage
     let data = [];
-
     if(localStorage.getItem("data") === null) {
         localStorage.setItem("data", JSON.stringify(data));
     }
     data = JSON.parse(localStorage.getItem("data"));
 
+    //click listening for all dom
     document.addEventListener('click', (e) => {
+        //delete item
         if(e.target && e.target.className == 'delete-button') {
             //edit the todoitem with value e.target.value
             data.splice(e.target.id, 1);
@@ -20,12 +23,14 @@ window.onload = function(){
             rendreItems();
         }
 
+        //change state
         if(e.target && e.target.className == 'drop-down') {
             let id = e.target.id;
             let value = e.target.value;
             changeStatus(id, value);
         }
 
+        //change display
         if(e.target && e.target.className == "display-button") {
             if(e.target.value == 0) {
                 displayNumber = 1;
@@ -37,20 +42,21 @@ window.onload = function(){
             rendreItems();
         }
 
+        //add item
         if(e.target && e.target.id == "form-button") {
             if(title.value.replaceAll(/\s/g,'') !== "" && info.value.replaceAll(/\s/g,'') !== "") {
                 addToData(title.value, info.value);
-            title.value = "";
-            info.value = "";
-            rendreItems();
+                title.value = "";
+                info.value = "";
+                rendreItems();
             } else {
                 error.innerHTML = "Empty Field";
             }
         }
     });
 
+    //input checking for add form
     let prevValue;
-
     info.addEventListener("keyup", () => {
         if(info.value.length >= 120) {
             info.value = prevValue;
@@ -62,11 +68,13 @@ window.onload = function(){
 
     });
 
+    //seach event
     const searchInput = document.getElementById("search-input");
     searchInput.addEventListener("keyup", () => {
         searchFor(searchInput.value);
     });
 
+    //search that renders result
     function searchFor(key) {
         let result = [];
         data.forEach((item) => {
@@ -78,9 +86,8 @@ window.onload = function(){
         rendre(result);
     }
 
-
+    //quick switch for display buttons
     displayButton(displayNumber);
-
     function displayButton(x) {
         if(x == 0) {
             document.getElementById("b1").setAttribute("class", "display-button active");
@@ -92,6 +99,7 @@ window.onload = function(){
         }
     }
 
+    //function for changing the state of an todoItem when changed on dropdown
     function changeStatus(id, value) {
         if(value != -1 && data[id].status != value) {
             data[id].status = value;
@@ -100,6 +108,7 @@ window.onload = function(){
         }
     }
 
+    //add function re saves the data object to cookies
     function addToData(title, info) {
         let item = {
             title: title,
@@ -111,6 +120,7 @@ window.onload = function(){
         localStorage.setItem("data", JSON.stringify(data));
     }
 
+    //rendres all the todo items from data object based on the global displayNumber
     function rendre(data) {
         while(todoContainer.firstChild) {
             todoContainer.firstChild.remove();
@@ -123,9 +133,11 @@ window.onload = function(){
         });
     }
 
+    //rendre without param
     function rendreItems() {
         rendre(data);
     }
 
+    //rendres on site loaded
     rendreItems();
 };

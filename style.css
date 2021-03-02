@@ -23,6 +23,13 @@ select, option {
     ;
 }
 
+@media only screen and (max-width: 800px) {
+    .frame {
+        grid-template-columns: 30vw 70vw; 
+        grid-template-rows: 9vh 91vh;
+    }
+}
+
 .header {
     grid-area: header;
     background: rgb(103,177,255);
@@ -32,9 +39,16 @@ select, option {
     grid-template-areas: ". . . input .";
 }
 
+@media only screen and (max-width: 800px) {
+    .header {
+        grid-template-columns: 1% 15% 15% 16% 40%;
+    }
+}
+
 .display-button {
     margin: auto;
     width: 5vw;
+    min-width: 50px;
     height: 2.2vh;
     font-size: 1.3vh;
     text-align: center;
@@ -42,6 +56,12 @@ select, option {
     border: none;
     box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
     cursor: pointer;
+}
+
+@media only screen and (max-width: 450px) {
+    .display-button {
+        height: 4vh;
+    }
 }
 
 .active {
@@ -62,6 +82,7 @@ select, option {
     grid-area: input;
     margin: auto;
     width: 12vw;
+    min-width: 230px;
     height: 2.2vh;
     font-size: 1.3vh;
     text-align: center;
@@ -70,12 +91,24 @@ select, option {
     box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
 }
 
+@media only screen and (max-width: 450px) {
+    .search {
+        height: 4vh;
+    }
+}
+
 .side {
     grid-area: side;
     background-color: #E5E7E9;
     display: grid;
-    grid-template-rows: 5% 5% 5% 5% 5% 45%;
+    grid-template-rows: 5% 5% 5% 5% 5% 42% 3%;
     text-align: center;
+}
+
+@media only screen and (max-width: 450px) {
+    .side {
+        grid-template-rows: 5% 7% 7% 7% 5% 36% 3%;
+    }
 }
 
 .side h2 {
@@ -83,11 +116,17 @@ select, option {
     font-size: 1.7vh;
 }
 
-.side p {
+.side #error {
     font-size: 1.4vh;
     color: red;
     opacity: .5;
     word-wrap: break-word;
+}
+
+.footer {
+    font-size: 1.2vh;
+    grid-row: 20;
+    opacity: .4;
 }
 
 .form-input {
@@ -106,6 +145,7 @@ select, option {
     transition: all .2s ease;
 }
 
+
 #form-button:hover {
     background: rgb(169,255,248);
     background: linear-gradient(90deg, rgba(169,255,248,0.5858718487394958) 0%, rgba(0,236,255,0.13209033613445376) 100%);
@@ -118,13 +158,21 @@ select, option {
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
     align-content: flex-start;
+    overflow-y: scroll;
 }
 
 .box {
     background-color: #F2F3F4;
     box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
-    width: 300px;
-    height: 150px;
+
+    width: 15vw;
+    max-width: 300px;
+    min-width: 200px;
+
+    height: 16vh;
+    max-height: 150px;
+    min-height: 120px;
+
     margin: 1vh;
     display: grid;
     grid-template-columns: 35% 35% 30%;
@@ -163,10 +211,6 @@ select, option {
     text-align: center;
 }
 
-.edit {
-    text-align: center;
-}
-
 .drop-down {
     width: 100%;
     height: 100%;
@@ -178,5 +222,5 @@ select, option {
     filter: invert(70%);
     padding-top: 5px;
     cursor: pointer;
-    margin-left: 40px ;
+    margin-left: 40%;
 }
