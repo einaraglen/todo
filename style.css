@@ -101,13 +101,13 @@ select, option {
     grid-area: side;
     background-color: #E5E7E9;
     display: grid;
-    grid-template-rows: 5% 5% 5% 5% 5% 42% 3%;
+    grid-template-rows: 5% 5% 5% 5% 5% 71% 3%;
     text-align: center;
 }
 
 @media only screen and (max-width: 450px) {
     .side {
-        grid-template-rows: 5% 7% 7% 7% 5% 36% 3%;
+        grid-template-rows: 5% 7% 7% 7% 5% 65% 3%;
     }
 }
 
@@ -123,9 +123,43 @@ select, option {
     word-wrap: break-word;
 }
 
+.settings {
+    grid-row: 6;
+}
+
+.settings-img {
+    height: 1vh;
+    transition: all .2s ease;
+    cursor: pointer;
+    float: left;
+    margin-left: 1vw;
+}
+
+.handle {
+    height: 2vh;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.handle:hover {
+    background-color: lightgrey;
+}
+
+.handle:hover .settings-img {
+    filter: invert(90%);
+}
+
+.content {
+    width: 100%;
+    height: 0;
+    background-color: grey;
+    overflow: hidden;
+    transition: all .2s ease;
+}
+
 .footer {
     font-size: 1.2vh;
-    grid-row: 20;
+    grid-row: 7;
     opacity: .4;
 }
 
@@ -182,7 +216,27 @@ select, option {
 .title {
     padding-top: 7px;
     grid-column: 1 / span 3;
+    padding-left: 5px;
+    display: grid;
+    grid-template-columns: 80% 20%;
+}
+
+.title p {
+    grid-column: 1;
+}
+
+.notification {
+    grid-column: 2;
+    background: rgb(169,255,248);
+    background: linear-gradient(90deg, rgba(169,255,248,0.5858718487394958) 0%, rgba(0,236,255,0.5690651260504201) 100%);
+    width: 85%;
+    height: 50%;
+    float: right;
+    margin-right: 10%;
+    padding: 2px 1px 2px 1px;
     text-align: center;
+    font-size: 12px;
+    border-radius: 5px;
 }
 
 .t0 {

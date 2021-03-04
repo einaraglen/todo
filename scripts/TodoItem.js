@@ -21,8 +21,19 @@ class TodoItem {
     //builds title of element
     buildTitle() {
         let title = document.createElement("div");
+        let text = document.createElement("p");
         title.setAttribute("class", "title " + "t" + (parseInt(this.item.status) + 1));
-        title.innerHTML = this.item.title;
+        title.appendChild(text);
+        text.innerHTML = this.item.title;
+
+        //indicate that this is new item
+        if(this.item.status == -1) {
+            let setStateNotification = document.createElement("div");
+            setStateNotification.setAttribute("class", "notification");
+            setStateNotification.innerHTML = "New!";
+            title.appendChild(setStateNotification);
+        }
+
         return title;
     }
 

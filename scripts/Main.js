@@ -1,10 +1,14 @@
 //script is called onload to wait for DOM to be loaded.
 window.onload = () => {
     const todoContainer = document.getElementById("todo-container");
+    const searchInput = document.getElementById("search-input");
     const title = document.getElementById("title");
     const info = document.getElementById("info");
     const error = document.getElementById("error");
+
     let displayNumber = 2;
+    let prevValue;
+    let lastClicked;
 
     //cookie storage
     let data = [];
@@ -16,22 +20,22 @@ window.onload = () => {
     //click listening for all dom
     document.addEventListener('click', (e) => {
         //delete item
-        if(e.target && e.target.className == 'delete-button') {
+        if(e.target && e.target.className === 'delete-button') {
             //edit the todoitem with value e.target.value
             data.splice(e.target.id, 1);
             localStorage.setItem("data", JSON.stringify(data));
-            rendreItems();
+            rendre(data);
         }
 
         //change state
-        if(e.target && e.target.className == 'drop-down') {
+        if(e.target && e.target.className === 'drop-down') {
             let id = e.target.id;
             let value = e.target.value;
             changeStatus(id, value);
         }
 
         //change display
-        if(e.target && e.target.className == "display-button") {
+        if(e.target && e.target.className === "display-button") {
             if(e.target.value == 0) {
                 displayNumber = 1;
                 displayButton(0);
@@ -39,24 +43,54 @@ window.onload = () => {
                 displayNumber = 2;
                 displayButton(1);
             }
-            rendreItems();
+            rendre(data);
         }
 
         //add item
-        if(e.target && e.target.id == "form-button") {
+        if(e.target && e.target.id === "form-button") {
             if(title.value.replaceAll(/\s/g,'') !== "" && info.value.replaceAll(/\s/g,'') !== "") {
                 addToData(title.value, info.value);
                 title.value = "";
                 info.value = "";
-                rendreItems();
+                rendre(data);
             } else {
                 error.innerHTML = "Empty Field";
             }
         }
+
+        if(e.target && e.target.className === "handle" || e.target.className === "settings-img") {
+            let imgs = Array.from(document.getElementsByClassName("settings-img"));
+            let contents = Array.from(document.getElementsByClassName("content"));
+            if(lastClicked === e.target.id) {
+                let state = parseInt(imgs[parseInt(e.target.id)].value);
+                if(state == 0) {
+                    settingsState(imgs[parseInt(e.target.id)], contents[parseInt(e.target.id)], 1);
+                } else {
+                    settingsState(imgs[parseInt(e.target.id)], contents[parseInt(e.target.id)], 0);
+                }
+            } else {
+                for(let i = 0; i < imgs.length; i++) {
+                    if(i == parseInt(e.target.id)) {
+                        settingsState(imgs[i], contents[i], 1);
+                    } else {
+                        settingsState(imgs[i], contents[i], 0);
+                    }
+                }
+            }
+            
+            lastClicked = e.target.id;
+        }
     });
 
+    function settingsState(img, content, state) {
+        let degrees = [0, 180];
+        let height = [0, 60];
+        img.style = "transform: rotate(" + degrees[state] +"deg)";
+        content.style = "height: " + height[state] + "px";
+        img.value = state;
+    }
+
     //input checking for add form
-    let prevValue;
     info.addEventListener("keyup", () => {
         if(info.value.length >= 120) {
             info.value = prevValue;
@@ -69,7 +103,6 @@ window.onload = () => {
     });
 
     //seach event
-    const searchInput = document.getElementById("search-input");
     searchInput.addEventListener("keyup", () => {
         searchFor(searchInput.value);
     });
@@ -87,7 +120,6 @@ window.onload = () => {
     }
 
     //quick switch for display buttons
-    displayButton(displayNumber);
     function displayButton(x) {
         if(x == 0) {
             document.getElementById("b1").setAttribute("class", "display-button active");
@@ -103,8 +135,8 @@ window.onload = () => {
     function changeStatus(id, value) {
         if(value != -1 && data[id].status != value) {
             data[id].status = value;
-            rendreItems();
             localStorage.setItem("data", JSON.stringify(data));
+            rendre(data);
         }
     }
 
@@ -133,11 +165,15 @@ window.onload = () => {
         });
     }
 
-    //rendre without param
-    function rendreItems() {
-        rendre(data);
+    function buildSettings() {
+        for(let i = 0; i < 5; i++) {
+            let item = new SettingsItem(i, "TEST");
+            document.getElementById("settings-container").appendChild(item.getItem());
+        }
     }
 
-    //rendres on site loaded
-    rendreItems();
+    //initialize site
+    displayButton(displayNumber);
+    rendre(data);
+    buildSettings();
 };
