@@ -36,13 +36,8 @@ window.onload = () => {
 
         //change display
         if(e.target && e.target.className === "display-button") {
-            if(e.target.value == 0) {
-                displayNumber = 1;
-                displayButton(0);
-            } else {
-                displayNumber = 2;
-                displayButton(1);
-            }
+            displayNumber = (e.target.value == 0) ? 1 : 2;
+            displayButton((e.target.value == 0) ? 0 : 1);
             rendre(data);
         }
 
@@ -63,18 +58,10 @@ window.onload = () => {
             let contents = Array.from(document.getElementsByClassName("content"));
             if(lastClicked === e.target.id) {
                 let state = parseInt(imgs[parseInt(e.target.id)].value);
-                if(state == 0) {
-                    settingsState(imgs[parseInt(e.target.id)], contents[parseInt(e.target.id)], 1);
-                } else {
-                    settingsState(imgs[parseInt(e.target.id)], contents[parseInt(e.target.id)], 0);
-                }
+                settingsState(imgs[parseInt(e.target.id)], contents[parseInt(e.target.id)], (state == 0) ? 1 : 0);
             } else {
                 for(let i = 0; i < imgs.length; i++) {
-                    if(i == parseInt(e.target.id)) {
-                        settingsState(imgs[i], contents[i], 1);
-                    } else {
-                        settingsState(imgs[i], contents[i], 0);
-                    }
+                    settingsState(imgs[i], contents[i], (i == parseInt(e.target.id)) ? 1 : 0);
                 }
             }
             
@@ -83,21 +70,17 @@ window.onload = () => {
     });
 
     function settingsState(img, content, state) {
-        let degrees = [0, 180];
-        let height = [0, 60];
-        img.style = "transform: rotate(" + degrees[state] +"deg)";
-        content.style = "height: " + height[state] + "px";
+        let degrees = (state != 1) ? 0 : 180;
+        let height = (state != 1) ? 0 : 60;
+        img.style = "transform: rotate(" + degrees +"deg)";
+        content.style = "height: " + height + "px";
         img.value = state;
     }
 
     //input checking for add form
     info.addEventListener("keyup", () => {
-        if(info.value.length >= 120) {
-            info.value = prevValue;
-            error.innerHTML = "Max characters : 120";
-        } else {
-            error.innerHTML = "";
-        }
+        info.value = (info.value.length >= 120) ? prevValue : info.value;
+        error.innerHTML = (info.value.length >= 120) ? "Max characters : 120" : "";
         prevValue = info.value;
 
     });
@@ -121,14 +104,8 @@ window.onload = () => {
 
     //quick switch for display buttons
     function displayButton(x) {
-        if(x == 0) {
-            document.getElementById("b1").setAttribute("class", "display-button active");
-            document.getElementById("b2").setAttribute("class", "display-button");
-        } else {
-            displayNumber = 2;
-            document.getElementById("b2").setAttribute("class", "display-button active");
-            document.getElementById("b1").setAttribute("class", "display-button");
-        }
+        document.getElementById("b1").setAttribute("class", (x == 0) ? "display-button active" : "display-button");
+        document.getElementById("b2").setAttribute("class", (x != 0) ? "display-button active" : "display-button");
     }
 
     //function for changing the state of an todoItem when changed on dropdown

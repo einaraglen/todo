@@ -145,10 +145,6 @@ select, option {
     background-color: lightgrey;
 }
 
-.handle:hover .settings-img {
-    filter: invert(90%);
-}
-
 .content {
     width: 100%;
     height: 0;
