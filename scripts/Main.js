@@ -53,7 +53,9 @@ window.onload = () => {
             }
         }
 
-        if(e.target && e.target.className === "handle" || e.target.className === "settings-img") {
+        if(e.target && e.target.className === "handle" 
+        || e.target.className === "settings-img" 
+        || e.target.className === "handle-text") {
             let imgs = Array.from(document.getElementsByClassName("settings-img"));
             let contents = Array.from(document.getElementsByClassName("content"));
             if(lastClicked === e.target.id) {
@@ -71,7 +73,7 @@ window.onload = () => {
 
     function settingsState(img, content, state) {
         let degrees = (state != 1) ? 0 : 180;
-        let height = (state != 1) ? 0 : 60;
+        let height = (state != 1) ? 0 : 150;
         img.style = "transform: rotate(" + degrees +"deg)";
         content.style = "height: " + height + "px";
         img.value = state;
@@ -143,8 +145,10 @@ window.onload = () => {
     }
 
     function buildSettings() {
-        for(let i = 0; i < 5; i++) {
-            let item = new SettingsItem(i, "TEST");
+        for(let i = 0; i < 3; i++) {
+            let titles = ["Colors", "Sizing", "Scheme"];
+            let content = document.createElement("div");
+            let item = new SettingsItem(i, titles[i], content);
             document.getElementById("settings-container").appendChild(item.getItem());
         }
     }

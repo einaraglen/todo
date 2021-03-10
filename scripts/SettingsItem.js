@@ -1,6 +1,7 @@
 class SettingsItem {
-    constructor(index, content) {
+    constructor(index, text, content) {
         this.content = content;
+        this.text = text;
         this.index = index;
     }
 
@@ -18,6 +19,7 @@ class SettingsItem {
     buildHandle() {
         let div = document.createElement("div");
         let icon = document.createElement("img");
+        let title = document.createElement("p");
 
         div.setAttribute("class", "handle");
         div.setAttribute("id", this.index);
@@ -27,7 +29,12 @@ class SettingsItem {
         icon.setAttribute("src", "img/icon.png");
         icon.setAttribute("value", "0");
 
+        title.setAttribute("class", "handle-text");
+        title.setAttribute("id", this.index);
+        title.innerHTML = this.text;
+
         div.appendChild(icon);
+        div.appendChild(title);
 
         return div;
     }
@@ -36,6 +43,8 @@ class SettingsItem {
         let div = document.createElement("div");
 
         div.setAttribute("class", "content");
+        
+        div.appendChild(this.content);
 
         return div;
     }
